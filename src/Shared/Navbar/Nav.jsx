@@ -1,8 +1,15 @@
 'use client';
-import { Avatar, Dropdown, Navbar } from 'flowbite-react';
+import { Avatar, DarkThemeToggle, Dropdown, Navbar } from 'flowbite-react';
+import { Link } from 'react-router-dom';
+import useAuth from '../../Hooks/useAuth';
 
 
 const Nav = () => {
+    const { user, logOut } = useAuth()
+
+    const handleLogOut = () => {
+        logOut()
+    }
     return (
         <Navbar fluid rounded className=' text-white fixed z-10 w-full opacity-80 bg-black'>
             <Navbar.Brand >
@@ -29,16 +36,22 @@ const Nav = () => {
                     <Dropdown.Divider />
                     <Dropdown.Item>Sign out</Dropdown.Item>
                 </Dropdown>
+                <DarkThemeToggle></DarkThemeToggle>
                 <Navbar.Toggle />
             </div>
             <Navbar.Collapse>
-                <Navbar.Link active>
+                <Link to='/' active>
                     <p className=' text-white'>Home</p>
-                </Navbar.Link>
-                <Navbar.Link ><p className=' text-white'>About</p></Navbar.Link>
-                <Navbar.Link ><p className=' text-white'>Services</p></Navbar.Link>
-                <Navbar.Link ><p className=' text-white'>Pricing</p></Navbar.Link>
-                <Navbar.Link ><p className=' text-white'>Contact</p></Navbar.Link>
+                </Link>
+                <Link to='/menu'><p className=' text-white'>Menu</p></Link>
+                <Link to='/shop'><p className=' text-white'>Our Shop</p></Link>
+                <Link ><p className=' text-white'>Pricing</p></Link>
+                <Link ><p className=' text-white'>Contact</p></Link>
+                {user ?
+                    <button onClick={handleLogOut} className=' text-white'>LogOut</button>
+                    :
+                    <Link to={'/logIn'}><p className=' text-white'>LogIn</p></Link>
+                }
             </Navbar.Collapse>
         </Navbar>
     );

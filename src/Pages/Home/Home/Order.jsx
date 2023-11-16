@@ -8,7 +8,7 @@ import sl3 from '../../../Assets/home/slide3.jpg'
 import sl4 from '../../../Assets/home/slide4.jpg'
 import sl5 from '../../../Assets/home/slide5.jpg'
 import SecTitle from '../../../Components/SecTitle/SecTitle';
-import Cover from '../../../Components/Cover';
+import Cover from './BistroCover';
 
 const Order = () => {
     return (
@@ -44,7 +44,6 @@ const Order = () => {
                     </SwiperSlide>
                 </Swiper>
             </section>
-            <Cover ></Cover>
         </div>
 
     );

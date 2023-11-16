@@ -11,7 +11,7 @@ const FooterFood = () => {
                         href="https://flowbite.com"
                         src="https://flowbite.com/docs/images/logo.svg"
                         alt="Flowbite Logo"
-                        name="Flowbite"
+                        name="Popular Restaurant"
                     />
                     <Footer.LinkGroup>
                         <Footer.Link href="#">About</Footer.Link>
