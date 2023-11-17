@@ -9,7 +9,7 @@ const useHooks = () => {
         axios.get('http://localhost:5000/api/v1/foods')
             .then(res => setFoods(res.data))
     }, [])
-    return foods
+    return [foods]
 };
 
 export default useHooks;

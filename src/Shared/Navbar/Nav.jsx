@@ -2,11 +2,13 @@
 import { Avatar, DarkThemeToggle, Dropdown, Navbar } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
+import { FaShoppingCart } from 'react-icons/fa';
+import useCart from '../../Hooks/useCart';
 
 
 const Nav = () => {
     const { user, logOut } = useAuth()
-
+    const [carts] = useCart()
     const handleLogOut = () => {
         logOut()
     }
@@ -46,6 +48,7 @@ const Nav = () => {
                 <Link to='/menu'><p className=' text-white'>Menu</p></Link>
                 <Link to='/shop'><p className=' text-white'>Our Shop</p></Link>
                 <Link ><p className=' text-white'>Pricing</p></Link>
+                <Link to='/dashBoard/myCarts'><p className=' text-white'><FaShoppingCart /> {carts.length}</p></Link>
                 <Link ><p className=' text-white'>Contact</p></Link>
                 {user ?
                     <button onClick={handleLogOut} className=' text-white'>LogOut</button>

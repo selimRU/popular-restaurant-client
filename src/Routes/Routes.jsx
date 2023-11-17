@@ -8,7 +8,9 @@ import SignUp from "../Pages/SignUp/SignUp";
 import LogIn from "../Pages/LogIn/LogIn";
 import DashBoard from "../LayOut/DashBoard/DashBoard";
 import AdminHome from "../LayOut/DashBoard/AdminHome";
+import MyCart from "../LayOut/DashBoard/MyCart/MyCart";
 import AllUsers from "../LayOut/DashBoard/AllUsers/AllUsers";
+
 
 
 
@@ -45,13 +47,17 @@ export const router = createBrowserRouter([
         element: <DashBoard></DashBoard>,
         children: [
             {
-                path: 'dashBoard/adminHome',
+                path: 'adminHome',
                 element: <AdminHome></AdminHome>
             },
             {
-                path: 'dashBoard/allUsers',
-                element: <AllUsers></AllUsers>
+                path: 'allUsers',
+                element: <AllUsers />
             },
+            {
+                path: 'myCarts',
+                element: <MyCart />
+            }
         ]
-    },
+    }
 ])

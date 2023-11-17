@@ -9,11 +9,12 @@ import { useState } from 'react';
 const AddCartFood = ({ items }) => {
     const [tabIndex, setTabIndex] = useState(0);
 
-    const menuFoods = useHooks()
-    const desserts = menuFoods.filter(dessert => dessert.category === 'dessert')
-    const pizzas = menuFoods.filter(pizza => pizza.category === 'pizza')
-    const salads = menuFoods.filter(salad => salad.category === 'salad')
-    const soups = menuFoods.filter(soup => soup.category === 'soup')
+    const [menuFoods] = useHooks()
+    console.log(menuFoods);
+    const desserts = menuFoods?.filter(dessert => dessert.category === 'dessert')
+    const pizzas = menuFoods?.filter(pizza => pizza.category === 'pizza')
+    const salads = menuFoods?.filter(salad => salad.category === 'salad')
+    const soups = menuFoods?.filter(soup => soup.category === 'soup')
     return (
         <div className=' my-10'>
             <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>

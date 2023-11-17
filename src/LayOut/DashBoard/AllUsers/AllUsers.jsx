@@ -1,24 +1,87 @@
 import { useQuery } from "@tanstack/react-query";
-import { data } from "autoprefixer";
-import axios from "axios";
 'use client';
 
 import { Table } from 'flowbite-react';
+import { FaTrash, FaUsers } from "react-icons/fa";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+
+
 
 const AllUsers = () => {
-    const { data } = useQuery({
+    const axiosSecure = useAxiosSecure()
+    const { data, refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const data = await axios.get('http://localhost:5000/api/v1/getUsers')
+            const data = await axiosSecure.get('/api/v1/getUsers')
+            console.log(data);
             return data
         }
     })
+
+    const handleDeleteUser = (id) => {
+        axiosSecure.delete(`/api/v1/deleteUser/${id}`)
+            .then(res => {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log(res.data)
+                        if (res.data.deletedCount > 0) {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "User has been deleted",
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            refetch()
+                        }
+                    }
+                })
+            })
+    }
+
+    const handleMakeAdmin = (id) => {
+        AxiosSecure.patch(`/api/v1/users/admin/${id}`)
+            .then(res => {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log(res.data)
+                        if (res.data.modifiedCount > 0) {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Your have updated the role",
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            refetch()
+                        }
+                    }
+                })
+            })
+    }
     return (
         <Table>
             <Table.Head>
-                <Table.HeadCell>Product name</Table.HeadCell>
-                <Table.HeadCell>Color</Table.HeadCell>
-                <Table.HeadCell>Category</Table.HeadCell>
+                <Table.HeadCell>Serial</Table.HeadCell>
+                <Table.HeadCell>Name</Table.HeadCell>
+                <Table.HeadCell>Email</Table.HeadCell>
                 <Table.HeadCell>Price</Table.HeadCell>
                 <Table.HeadCell>
                     Update
@@ -38,14 +101,17 @@ const AllUsers = () => {
                         <Table.Cell>{user.email}</Table.Cell>
                         <Table.Cell>$2999</Table.Cell>
                         <Table.Cell>
-                            <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                                Edit
-                            </a>
+                            {
+                                user.role === 'admin' ? 'Admin' :
+                                    <button onClick={() => handleMakeAdmin(user._id)} className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
+                                        <FaUsers />
+                                    </button>
+                            }
                         </Table.Cell>
                         <Table.Cell>
-                            <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                                Delete
-                            </a>
+                            <button onClick={() => handleDeleteUser(user._id)} className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
+                                <FaTrash />
+                            </button>
                         </Table.Cell>
                     </Table.Row>
                 )

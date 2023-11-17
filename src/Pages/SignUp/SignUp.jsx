@@ -3,15 +3,40 @@ import { useForm } from "react-hook-form";
 'use client';
 import imgSignup from '../../Assets/others/authentication1.png'
 import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { FaGoogle } from "react-icons/fa";
 
 const SignUp = () => {
-    const { createUser, profileUpdate } = useAuth()
-
+    const { createUser, profileUpdate, loginWithGoogle } = useAuth()
+    const navigate = useNavigate()
+    const handleGoogleLogin = () => {
+        loginWithGoogle()
+            .then(res => {
+                console.log(res.user);
+                const userInfo = {
+                    name: res.user.displayName,
+                    email: res.user.email
+                }
+                axios.post('http://localhost:5000/api/v1/users', userInfo)
+                    .then(res => {
+                        console.log(res.data);
+                        const loggedUser = res.data.insertedId
+                        if (loggedUser) {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "User created successfully",
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            navigate('/')
+                        }
+                    })
+            })
+    }
     const {
         register,
         formState: { errors },
@@ -34,10 +59,11 @@ const SignUp = () => {
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
-                                title: "suser created successfully",
+                                title: "User created successfully",
                                 showConfirmButton: false,
                                 timer: 1500
                             })
+                            navigate('/')
                         }
                     })
             })
@@ -112,8 +138,13 @@ const SignUp = () => {
                             </Label>
                         </div>
                         {errors.check && <span className=" text-red-500" >Check is required</span>}
-                        <Button type="submit">Sign Up</Button>
+                        <Button outline gradientDuoTone="pinkToOrange" type="submit">Sign Up</Button>
+                        <Button onClick={handleGoogleLogin} className=" uppercase" outline gradientDuoTone="pinkToOrange">
+                            <FaGoogle className=" mr-2" /> JoinwithGoole
+                        </Button>
                     </form>
+
+                    <button></button>
                     <h4 className=" text-center my-5 ">Already have an account? <Link to='/logIn'><span className=" text-blue-600 underline">Please LogIn</span></Link></h4>
                 </div>
             </div>
