@@ -15,6 +15,7 @@ const AddCartFood = ({ items }) => {
     const pizzas = menuFoods?.filter(pizza => pizza.category === 'pizza')
     const salads = menuFoods?.filter(salad => salad.category === 'salad')
     const soups = menuFoods?.filter(soup => soup.category === 'soup')
+    const drinks = menuFoods?.filter(drink => drink.category === 'drinks')
     return (
         <div className=' my-10'>
             <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
@@ -24,6 +25,7 @@ const AddCartFood = ({ items }) => {
                         <Tab><p className=' hover:text-yellow-300'>Pizza</p></Tab>
                         <Tab><p className=' hover:text-yellow-300'>Salad</p></Tab>
                         <Tab><p className=' hover:text-yellow-300'>Soup</p></Tab>
+                        <Tab><p className=' hover:text-yellow-300'>Drinks</p></Tab>
                     </TabList>
                 </div>
 
@@ -38,6 +40,9 @@ const AddCartFood = ({ items }) => {
                 </TabPanel>
                 <TabPanel>
                     <AddCartCategory items={soups}></AddCartCategory>
+                </TabPanel>
+                <TabPanel>
+                    <AddCartCategory items={drinks}></AddCartCategory>
                 </TabPanel>
             </Tabs>
 

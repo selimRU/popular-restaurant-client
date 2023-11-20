@@ -49,7 +49,7 @@ const AllUsers = () => {
     }
 
     const handleMakeAdmin = (id) => {
-        AxiosSecure.patch(`/api/v1/users/admin/${id}`)
+        axiosSecure.patch(`/api/v1/users/admin/${id}`)
             .then(res => {
                 Swal.fire({
                     title: "Are you sure?",
@@ -91,7 +91,6 @@ const AllUsers = () => {
                 </Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
-                {console.log(data)}
                 {data?.data?.map((user, index) =>
                     < Table.Row key={user._id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">

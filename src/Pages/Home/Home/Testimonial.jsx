@@ -10,12 +10,14 @@ import { FaQuoteLeft } from 'react-icons/fa';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
+import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 const Testimonial = () => {
+    const axiosPublic = useAxiosPublic()
     // const Rating = require('react-rating');
     const [reviews, setReviews] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/v1/reviews')
+        axiosPublic.get('/api/v1/reviews')
             .then(res => {
                 const reviews = res.data
                 console.log(reviews);
@@ -33,7 +35,7 @@ const Testimonial = () => {
                     {
                         reviews.map(review => <SwiperSlide className=' space-y-3 px-16' key={review._id}>
                             <Rating
-                            className=' w-10 mx-auto'
+                                className=' w-10 mx-auto'
                                 style={{ maxWidth: 180 }}
                                 value={review.rating}
                                 readOnly

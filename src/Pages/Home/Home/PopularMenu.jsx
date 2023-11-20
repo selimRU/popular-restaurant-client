@@ -5,7 +5,7 @@ import useHooks from "../../../Hooks/useHooks";
 
 
 const PopularMenu = () => {
-    const foods = useHooks()
+    const [foods] = useHooks()
     const popularFoods = foods.filter(food => food.category === 'popular')
     console.log(foods);
     return (

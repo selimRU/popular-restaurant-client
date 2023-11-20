@@ -11,11 +11,14 @@ import MenuCover from './MenuCover';
 
 
 const Menu = () => {
-    const menuFoods = useHooks()
-    const desserts = menuFoods.filter(dessert => dessert.category === 'dessert')
-    const pizzas = menuFoods.filter(pizza => pizza.category === 'pizza')
-    const salads = menuFoods.filter(salad => salad.category === 'salad')
-    const soups = menuFoods.filter(soup => soup.category === 'soup')
+    const [foods] = useHooks()
+    console.log(foods);
+    const desserts = foods.filter(dessert => dessert.category === 'dessert')
+    console.log(desserts);
+    const pizzas = foods.filter(pizza => pizza.category === 'pizza')
+    const salads = foods.filter(salad => salad.category === 'salad')
+    const soups = foods.filter(soup => soup.category === 'soup')
+    const drinks = foods.filter(drink => drink.category === 'drinks')
     return (
         <div>
             <MenuCover title={'OUR MENU'} details={'Would you like to try a dish?'} img={ban}></MenuCover>
@@ -32,6 +35,9 @@ const Menu = () => {
             {/* soup part */}
             <MenuCover title={'SOUP'} details={'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'} img={soup} ></MenuCover>
             <MenuCategory items={soups}></MenuCategory>
+           {/* drinks part */}
+            <MenuCover title={'DRINKS'} details={'Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'} img={soup} ></MenuCover>
+            <MenuCategory items={drinks}></MenuCategory>
         </div>
     );
 };

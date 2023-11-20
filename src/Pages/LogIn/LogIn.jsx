@@ -7,16 +7,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import useAuth from '../../Hooks/useAuth';
 import Swal from 'sweetalert2';
+import { FaGoogle } from 'react-icons/fa';
 
 const LogIn = () => {
     const navigate = useNavigate()
-    const { logIn } = useAuth()
+    const { logIn, loginWithGoogle } = useAuth()
     const [disable, setDisable] = useState(true)
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
+
+    // google login
+    const handleGoogleLogin = () => {
+        loginWithGoogle()
+            .then(res => {
+                navigate('/')
+            })
+    }
 
     // handle capcha
     const handleCapcha = (e) => {
@@ -85,6 +94,9 @@ const LogIn = () => {
                         </div>
                         < LoadCanvasTemplate />
                         <Button disabled={disable} type="submit">LogIn</Button>
+                        <Button onClick={handleGoogleLogin} className=" uppercase" outline gradientDuoTone="pinkToOrange">
+                            <FaGoogle className=" mr-2" /> JoinwithGoole
+                        </Button>
                     </form>
                     <h4 className=" text-center my-5">New here ? <Link to='/signUp'><span className=" text-blue-600 underline">Please SignUp</span></Link></h4>
                 </div>

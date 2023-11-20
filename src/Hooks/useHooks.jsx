@@ -1,15 +1,26 @@
-import axios from 'axios';
+
 import React, { useEffect, useState } from 'react';
+import useAxiosPublic from './useAxiosPublic';
+import { useQuery } from '@tanstack/react-query';
 
 const useHooks = () => {
-    const [foods, setFoods] = useState([])
-    console.log(foods);
+    const axiosPublic = useAxiosPublic()
+    // const [foods, setFoods] = useState([])
+    // console.log(foods);
 
-    useEffect(() => {
-        axios.get('http://localhost:5000/api/v1/foods')
-            .then(res => setFoods(res.data))
-    }, [])
-    return [foods]
+    const { data: foods = [], refetch } = useQuery({
+        queryKey: ['foods'],
+        queryFn: async () => {
+            const res = await axiosPublic.get('/api/v1/foods')
+            return res.data
+        }
+    })
+
+    // useEffect(() => {
+    //     axiosPublic.get('/api/v1/foods')
+    //         .then(res => setFoods(res.data))
+    // }, [])
+    return [foods, refetch]
 };
 
 export default useHooks;

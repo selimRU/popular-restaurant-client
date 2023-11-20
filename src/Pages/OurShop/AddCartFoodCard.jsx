@@ -5,8 +5,10 @@ import { Card } from 'flowbite-react';
 import Swal from 'sweetalert2';
 import useCart from '../../Hooks/useCart';
 import useAuth from '../../Hooks/useAuth';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
 
 const AddCartFoodCard = ({ item }) => {
+    const axiosPublic = useAxiosPublic()
     const { user } = useAuth()
     const { name, recipe, image, price, category } = item
     const [, refetch] = useCart()
@@ -21,7 +23,7 @@ const AddCartFoodCard = ({ item }) => {
 
     const handleCart = () => {
 
-        axios.post('http://localhost:5000/api/v1/carts', cartItem)
+        axiosPublic.post('/api/v1/carts', cartItem)
             .then(res => {
                 console.log(res.data);
                 if (res.data.insertedId) {

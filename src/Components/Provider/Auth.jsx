@@ -47,17 +47,18 @@ const Auth = ({ children }) => {
             setUser(user)
             console.log(user);
             if (user) {
-                const info = user.email
+                const info = { email: user.email }
                 axiosPublic.post('api/v1/jwt', info)
                     .then(res => {
+                        console.log(res.data.token);
                         if (res.data.token) {
                             localStorage.setItem('token', res.data.token)
                         }
-
                     })
-
             }
-            localStorage.removeItem('token')
+            else {
+                localStorage.removeItem('token')
+            }
             setLoading(false)
         })
         return () => {
@@ -72,6 +73,7 @@ const Auth = ({ children }) => {
         logIn,
         profileUpdate,
         logOut,
+        loading,
         user
 
     }

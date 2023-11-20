@@ -1,23 +1,20 @@
+import useHooks from "../../../Hooks/useHooks";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import SecTitle from "../../../Components/SecTitle/SecTitle";
-import useCart from "../../../Hooks/useCart";
 
 'use client';
 
 import { Table } from 'flowbite-react';
-
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
-const MyCart = () => {
-
-    const [carts, refetch] = useCart()
+const ManageItem = () => {
+    const [foods, refetch] = useHooks()
     const axiosSecure = useAxiosSecure()
-    const totalPrice = carts.reduce((acc, item) => (acc + item.price), 0)
-    console.log(carts);
+    console.log(foods);
 
-    const handleDeleteCart = (id) => {
-        axiosSecure.delete(`/api/v1/deleteCarts/${id}`)
+    const handleDeletefood = (id) => {
+        axiosSecure.delete(`/api/v1/deletefoods/${id}`)
             .then(res => {
                 Swal.fire({
                     title: "Are you sure?",
@@ -46,11 +43,10 @@ const MyCart = () => {
     }
     return (
         <div>
-            <SecTitle heading={'WANNA ADD MORE?'} subHeading={'---My Cart---'}></SecTitle>
-            <h2>My Cart</h2>
+            <SecTitle heading={'Manage All Food'} subHeading={'---Hurry Up---'}></SecTitle>
+            <h2>My food</h2>
             <div className=" flex justify-between my-5">
-                <h3>Total Orders: {carts.length}</h3>
-                <h3>Total Price: {totalPrice}</h3>
+                <h3>Total Orders: {foods.length}</h3>
             </div>
 
             <Table hoverable>
@@ -64,18 +60,23 @@ const MyCart = () => {
                 </Table.Head>
                 <Table.Body className="divide-y">
                     {
-                        carts.map(cart =>
-                            < Table.Row key={cart._id}
+                        foods.map(food =>
+                            < Table.Row key={food._id}
                                 className="bg-white dark:border-gray-700 dark:bg-gray-800">
                                 <Table.Cell className="p-4">
-                                    <img className=" w-[100px]" src={cart.image} alt="" />
+                                    <img className=" w-[100px]" src={food.image} alt="" />
                                 </Table.Cell>
                                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                    {cart.name}
+                                    {food.name}
                                 </Table.Cell>
-                                <Table.Cell>{cart.price}</Table.Cell>
+                                <Table.Cell>{food.price}</Table.Cell>
                                 <Table.Cell>
                                     <button onClick={() => handleDeleteCart(cart._id)} className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
+                                        <FaEdit></FaEdit>
+                                    </button>
+                                </Table.Cell>
+                                <Table.Cell>
+                                    <button onClick={() => handleDeletefood(food._id)} className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
                                         <FaTrash></FaTrash>
                                     </button>
                                 </Table.Cell>
@@ -87,4 +88,4 @@ const MyCart = () => {
     );
 };
 
-export default MyCart;
+export default ManageItem;

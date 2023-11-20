@@ -1,6 +1,7 @@
 
 
 const MenuCategoryCard = ({item}) => {
+    console.log(item);
     const { name, recipe, image, price } = item
     return (
         <div className='flex items-center gap-3'>

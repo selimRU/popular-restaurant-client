@@ -1,15 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import useAuth from "./useAuth";
+import useAxiosSecure from "./useAxiosSecure";
+// import useAxiosSecure from "./useAxiosSecure";
+
 
 
 const useCart = () => {
-    const { user } = useAuth()
+    const axiosSecure = useAxiosSecure()
+    const { user,loading } = useAuth()
     const { data: carts = [], refetch } = useQuery({
         queryKey: ['carts', user],
+        enabled: !loading && !!user?.email && !!localStorage.getItem('token'),
         queryFn: async () => {
-            const res = await axios.get(`http://localhost:5000/api/v1/getCarts?email=${user?.email}`)
-            console.log(res.data);
+            const res = await axiosSecure.get(`/api/v1/getCarts?email=${user?.email}`)
+            // console.log(res.data);
             return res.data
         },
     })

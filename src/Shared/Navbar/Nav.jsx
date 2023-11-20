@@ -48,7 +48,7 @@ const Nav = () => {
                 <Link to='/menu'><p className=' text-white'>Menu</p></Link>
                 <Link to='/shop'><p className=' text-white'>Our Shop</p></Link>
                 <Link ><p className=' text-white'>Pricing</p></Link>
-                <Link to='/dashBoard/myCarts'><p className=' text-white'><FaShoppingCart /> {carts.length}</p></Link>
+                <Link to='/dashBoard'><p className=' text-white'><FaShoppingCart /> {carts.length}</p></Link>
                 <Link ><p className=' text-white'>Contact</p></Link>
                 {user ?
                     <button onClick={handleLogOut} className=' text-white'>LogOut</button>

@@ -6,10 +6,11 @@ import { Button, Checkbox, Label, TextInput } from 'flowbite-react';
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
-import axios from "axios";
 import { FaGoogle } from "react-icons/fa";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const SignUp = () => {
+    const axiosPublic = useAxiosPublic()
     const { createUser, profileUpdate, loginWithGoogle } = useAuth()
     const navigate = useNavigate()
     const handleGoogleLogin = () => {
@@ -20,7 +21,7 @@ const SignUp = () => {
                     name: res.user.displayName,
                     email: res.user.email
                 }
-                axios.post('http://localhost:5000/api/v1/users', userInfo)
+                axiosPublic.post('/api/v1/users', userInfo)
                     .then(res => {
                         console.log(res.data);
                         const loggedUser = res.data.insertedId
@@ -52,7 +53,7 @@ const SignUp = () => {
                     name: data.name,
                     email: data.email
                 }
-                axios.post('http://localhost:5000/api/v1/users', userInfo)
+                axiosSecure.post('http://localhost:5000/api/v1/users', userInfo)
                     .then(res => {
                         const loggedUser = res.data.insertedId
                         if (loggedUser) {
